@@ -38,12 +38,14 @@ function NewPhone(props) {
       onClick={(e) => e.stopPropagation()}
       className="new-phone"
     >
-      <input
-        type="text"
-        placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-      />
+      <select onChange={(e) => setName(e.target.value)} value={name}>
+        <option value="">Select a category</option>
+        <option value="Mobile Phone">Mobile Phone</option>
+        <option value="Work Phone">Work Phone</option>
+        <option value="Telephone">Telephone</option>
+        <option value="Fax">Fax</option>
+      </select>
+
       <input
         type="text"
         placeholder="Phone Number"
