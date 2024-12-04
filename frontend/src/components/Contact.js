@@ -43,7 +43,16 @@ function Contact(props) {
       onClick={(e) => setExpanded(!expanded)}
     >
       <div className="title">
-        <h3>{contact.name}</h3>
+        <h3>Contact Summary</h3>
+        <div className="contact-info">
+          <p>
+            <strong>Name:</strong> {contact.name}
+          </p>
+          <p>
+            <strong>Address:</strong> {contact.address}
+          </p>
+        </div>
+
         <button className="button red" onClick={doDelete}>
           Delete Contact
         </button>
