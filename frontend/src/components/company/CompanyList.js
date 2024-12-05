@@ -3,7 +3,7 @@ import NewCompany from "./NewCompany";
 import Company from "./Company";
 
 function CompanyList(props) {
-  const { contact, companies, setCompany } = props;
+  const { contact, companies, setCompanies } = props;
 
   return (
     <div className="phone-list">
@@ -18,17 +18,17 @@ function CompanyList(props) {
           </tr>
         </thead>
         <tbody>
-          {/* {companies.map((company) => {
+          {companies.map((company) => {
             return (
               <Company
-                key={company.id}
-                phone={phone}
-                phones={phones}
-                setPhones={setPhones}
+                key={company.company_id}
+                company={company}
+                companies={companies}
+                setCompanies={setCompanies}
                 contact={contact}
               />
             );
-          })} */}
+          })}
         </tbody>
       </table>
     </div>

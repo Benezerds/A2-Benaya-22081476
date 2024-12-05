@@ -24,7 +24,11 @@ exports.create = (req, res) => {
 
 // Get all companies
 exports.findAll = (req, res) => {
-  Companies.findAll()
+  Companies.findAll({
+    where: {
+      contactId: parseInt(req.params.contactId),
+    },
+  })
     .then((data) => {
       res.send(data);
     })
@@ -75,31 +79,33 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete one company data by id
+// Delete one company by its ID and contact ID
 exports.delete = (req, res) => {
-  const id = parseInt(req.params.companyId);
+  const companyId = parseInt(req.params.companyId);
+  const contactId = parseInt(req.params.contactId);
 
   Companies.destroy({
-    where: { company_id: id },
-  }).then((num) => {
-    Contacts.destroy({
-      where: { id : id },
-    })
-      .then((num) => {
-        if (num == 1) {
-          res.send({
-            message: "Company was deleted successfully!",
-          });
-        } else {
-          res.send({
-            message: `Cannot delete Company`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: "Could not delete Company data with id=" + id,
+    where: {
+      company_id: companyId,
+      contactId: contactId, // Ensure the company belongs to the specific contact
+    },
+  })
+    .then((num) => {
+      if (num === 1) {
+        res.send({
+          message: "Company was deleted successfully!",
         });
+      } else {
+        res.status(404).send({
+          message: `Cannot delete company with id=${companyId} for contact with id=${contactId}. Company not found.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete company with id=" + companyId,
+        error: err.message,
       });
-  });
+    });
 };
+
