@@ -30,6 +30,12 @@ require("./routes/phones.routes")(app);
 require("./routes/stats.routes")(app);
 require("./routes/companies.routes")(app);
 
+//  Item. Order. Customer. routes
+require("./routes/orders.routes")(app);
+require("./routes/items.routes")(app);
+require("./routes/customers.routes")(app);
+
+
 // set port, listen for requests
 const PORT = 5000;
 app.listen(PORT, () => {
