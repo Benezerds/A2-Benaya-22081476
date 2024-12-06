@@ -24,4 +24,9 @@ db.contacts = require("./contact.model.js")(sequelize, Sequelize);
 db.phones = require("./phone.model.js")(sequelize, Sequelize);
 db.companies = require("./company.model.js")(sequelize, Sequelize);
 
+// Item, Customer, and Order tables
+db.items = require("./item.model.js")(sequelize, Sequelize);
+db.customers = require("./customer.model.js")(sequelize, Sequelize);
+db.orders = require("./order.model.js")(sequelize, Sequelize);
+
 module.exports = db;
