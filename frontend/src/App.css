@@ -37,6 +37,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
+    margin: 8px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -52,6 +53,10 @@
 }
 .red:hover {
     background-color: #da190b;
+}
+
+.blue {
+    background-color: rgb(84, 84, 234);
 }
 
 .page {

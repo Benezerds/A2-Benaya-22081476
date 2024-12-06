@@ -14,7 +14,7 @@ function CompanyList(props) {
           <tr>
             <th>Company Name</th>
             <th>Company Address</th>
-            <th></th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
