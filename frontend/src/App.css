@@ -2,6 +2,12 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.list-flex-container-row {
+    display: flex;
+    flex-direction: row;
+    row-gap: 18px;
+}
+
 .contact {
     border-width: 2px;
     border-style: solid;
