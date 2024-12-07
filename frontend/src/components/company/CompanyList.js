@@ -7,7 +7,7 @@ function CompanyList(props) {
 
   return (
     <div className="phone-list">
-      <NewCompany contact={contact} />
+      <NewCompany contact={contact} companies={companies} setCompanies={setCompanies} />
 
       <table onClick={(e) => e.stopPropagation()}>
         <thead>

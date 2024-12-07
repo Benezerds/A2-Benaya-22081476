@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function NewCompany(props) {
-  const { contact } = props;
+  const { companies, setCompanies, contact } = props;
 
   if (!contact || !contact.id) {
     return <p>No contact selected to associate a company with.</p>;
@@ -26,8 +26,8 @@ function NewCompany(props) {
 
     const data = await response.json();
 
-    if (data.id) {
-      console.log("New company created: ", data);
+    if (data.company_id) {
+      setCompanies([...companies, data]);
     }
 
     setCompanyName("");
