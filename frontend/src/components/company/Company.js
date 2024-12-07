@@ -49,7 +49,7 @@ function Company(props) {
         p.company_id === company.company_id ? updatedCompany : p
       );
 
-      setCompanies(newCompanies);
+      setCompanies([...companies, newCompanies]);
       setIsEditing(false); // Exit edit mode
     } else {
       console.error("Failed to update the company.");
