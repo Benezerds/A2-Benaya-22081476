@@ -1,9 +1,20 @@
-import { useState } from "react"; // import useEffect
+import { useEffect, useState } from "react"; // import useEffect
+import OrderList from "../order/OrderList";
 
 function Customer(props) {
   const { customer, customers, setCustomers } = props;
+  const [orders, setOrders] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
+  // Fetch customer orders data
+  useEffect(() => {
+    fetch("http://localhost/api/orders/" + customer.customer_id)
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   const expandStyle = {
     display: expanded ? "block" : "none",
@@ -19,11 +30,11 @@ function Customer(props) {
       }
     );
 
-    let newContacts = customers.filter((c) => {
-      return c.customer_id !== customers.customer_id;
+    let newCustomer = customers.filter((c) => {
+      return c.customer_id !== customer.customer_id;
     });
 
-    setCustomers(newContacts);
+    setCustomers(newCustomer);
   }
 
   return (
@@ -49,8 +60,8 @@ function Customer(props) {
       </div>
 
       <div style={expandStyle}>
+        <OrderList orders={orders} setOrders={setOrders} customer={customer} />
         <hr />
-        
       </div>
     </div>
   );
