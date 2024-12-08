@@ -51,8 +51,7 @@ function Order(props) {
     }
   }
 
-  console.log(order.item_name);
-  console.log(items.map((item) => item.item_id));
+  console.log(order);
 
   return (
     <tr>

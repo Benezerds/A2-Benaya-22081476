@@ -54,8 +54,10 @@ exports.findAll = (req, res) => {
       const formattedData = data.map((order) => ({
         order_id: order.order_id,
         order_date: order.order_date,
+        customer_id: order.customer_id,
+        item_id: order.item_id, 
         customer_name: order.customer.customer_name,
-        item_name: order.item.item_name,
+        item_name: order.item.item_name, 
       }));
       res.send(formattedData);
     })
