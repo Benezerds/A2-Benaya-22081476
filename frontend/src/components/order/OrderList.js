@@ -18,7 +18,7 @@ function OrderList(props) {
 
   return (
     <div className="phone-list">
-      <NewOrder customer={customer} items={items} />
+      <NewOrder customer={customer} items={items} orders={orders} setOrders={setOrders}/>
 
       <table onClick={(e) => e.stopPropagation()}>
         <thead>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function NewOrder(props) {
-  const { items, customer } = props;
+  const { items, customer, orders, setOrders } = props;
   const [item, setItem] = useState("");
 
   if (!customer || !customer.customer_id) {
@@ -27,7 +27,7 @@ function NewOrder(props) {
     const data = await response.json();
 
     if (data.order_id) {
-      console.log("New order created: ", data);
+      setOrders([...orders, data]);
 
       setItem("");
     } else {

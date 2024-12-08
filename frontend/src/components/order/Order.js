@@ -51,8 +51,6 @@ function Order(props) {
     }
   }
 
-  console.log(order);
-
   return (
     <tr>
       {isEditing ? (

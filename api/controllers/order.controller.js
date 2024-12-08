@@ -5,31 +5,52 @@ const Customer = db.customers;
 const Item = db.items;
 
 // Create a new Order
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.order_date || !req.body.customer_id || !req.body.item_id) {
-    return res.status(400).send({
-      message: "Order date, customer_id, and item_id are required!",
+exports.create = async (req, res) => {
+  try {
+    // Validate request
+    if (!req.body.order_date || !req.body.customer_id || !req.body.item_id) {
+      return res.status(400).send({
+        message: "Order date, customer_id, and item_id are required!",
+      });
+    }
+
+    // Create an Order
+    const order = {
+      order_date: req.body.order_date,
+      customer_id: req.body.customer_id,
+      item_id: req.body.item_id,
+    };
+
+    // Save the order in the database
+    const newOrder = await Order.create(order);
+
+    // Fetch related customer and item details
+    const customer = await Customer.findOne({
+      where: { customer_id: req.body.customer_id },
+      attributes: ["customer_name"], // Fetch only customer_name
+    });
+
+    const item = await Item.findOne({
+      where: { item_id: req.body.item_id },
+      attributes: ["item_name"], // Fetch only item_name
+    });
+
+    // Format the final response
+    const formattedOrder = {
+      order_id: newOrder.order_id,
+      order_date: newOrder.order_date,
+      customer_id: newOrder.customer_id,
+      item_id: newOrder.item_id,
+      customer_name: customer ? customer.customer_name : null, // Include customer_name
+      item_name: item ? item.item_name : null, // Include item_name
+    };
+
+    res.status(201).send(formattedOrder); // Return the formatted response
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Order.",
     });
   }
-
-  // Create an Order
-  const order = {
-    order_date: req.body.order_date,
-    customer_id: req.body.customer_id,
-    item_id: req.body.item_id,
-  };
-
-  // Save Order in the database
-  Order.create(order)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the Order.",
-      });
-    });
 };
 
 // Retrieve all Orders
