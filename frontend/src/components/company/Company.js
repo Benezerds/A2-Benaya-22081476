@@ -28,7 +28,21 @@ function Company(props) {
 
   async function editCompany(e) {
     e.preventDefault();
-
+  
+    // Optimistically update the company state
+    const updatedCompany = {
+      ...company,
+      company_name: editedCompanyName,
+      company_address: editedCompanyAddress,
+    };
+  
+    // Update the companies state immediately
+    const newCompanies = companies.map((p) =>
+      p.company_id === company.company_id ? updatedCompany : p
+    );
+    setCompanies(newCompanies);
+  
+    // Make the API request
     const response = await fetch(
       `http://localhost/api/companies/${company.company_id}/contacts/${contact.id}`,
       {
@@ -42,17 +56,19 @@ function Company(props) {
         }),
       }
     );
-
-    if (response.ok) {
-      const updatedCompany = await response.json(); // Assuming the updated data is returned
-      const newCompanies = companies.map((p) =>
-        p.company_id === company.company_id ? updatedCompany : p
-      );
-
-      setCompanies([...companies, newCompanies]);
-      setIsEditing(false); // Exit edit mode
-    } else {
+  
+    if (!response.ok) {
+      // If the update fails, you may want to revert the changes
       console.error("Failed to update the company.");
+      // Optionally, revert changes (e.g., reload the company data or restore original values)
+      const originalCompany = companies.find(
+        (p) => p.company_id === company.company_id
+      );
+      setEditedCompanyName(originalCompany.company_name);
+      setEditedCompanyAddress(originalCompany.company_address);
+    } else {
+      // If the update is successful, exit edit mode
+      setIsEditing(false);
     }
   }
 
